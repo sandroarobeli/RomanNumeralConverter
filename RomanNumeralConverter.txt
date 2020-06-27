@@ -1,0 +1,76 @@
+<!-- HTML elements 
+UI consists of an input element of type 'number' that ensures only numeric characters and decimal point can be entered. Handling of decimal points is 
+managed through javascript logic below. Also, a 'convert' button element clicking on which triggers conversion of arabic numerals into roman numerals and another button element that displays the result of conversion. In case one wanders why a button element displays the result, the answer has to do with manageability of styling given quite limited functionality of the platform.  
+-->
+
+<div  id='converter' style='box-sizing: border-box; width: 90%; margin: 0 auto;'>
+   <label for='arabicNumeral' style='display:block; text-align: center; font-weight: 600; color: #3F51B5;'>Arabic to Roman
+      <input type='number' name='arabicNumeral'  id='arabicNumeral' min='0' max='5000' step='1' placeholder='Enter an integer between 0 and 5000' style='padding: 10px; margin: 0 auto; border: 2px solid #eee; box-shadow:0 0 15px 4px rgba(0,0,0,0.06); border-radius:10px; width:100%; font-size: inherit;' /> 				
+    </label> <hr/>
+    <button type='button' id='convert'                      style='padding:10px; 
+         border:none;
+         margin: 0 auto;                                                                background-color:#3F51B5;
+         color:#fff;
+         font-weight:600;
+         border-radius:5px;
+         width:100%;'>Convert
+    </button>
+    <button type='button' id='display' 
+         onclick='convertToRoman()'   
+         style='padding:10px;
+         border:none;
+         margin: 0 auto;                                                   
+         background-color:#fff;
+         color:#3F51B5;
+         font-weight:600;
+         font-size: 3rem;       
+         border-radius:5px;
+         width:100%; '>
+    </button>
+ </div>   
+ 
+<script>
+ 
+  /* The following block is structured the way it is primarily due to limitations of the platform. The converter currently covers numbers between 0 and 5000, however it can be altered to cover negative numbers as well as numbers beyond 5000. The chosen range more than covers the purpose of the converter as being an interactive tool in the article. 
+  */   	
+   
+ 
+ const inputField = document.querySelector('input');
+ const outputField = document.getElementById('display');
+ const convertButton = document.getElementById('convert');
+ 
+ convertButton.addEventListener('click', convertToRoman);
+  
+ 
+function convertToRoman() {
+ 
+ let arabic = document.getElementById('arabicNumeral').value;
+ let roman = '';
+    
+ const arabicArray = [5000, 4000, 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+ const romanArray = ['V&#773;', 'MV&#773;','M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
+
+  
+if (/^(0|[1-9]\d*)$/.test(arabic)) {
+  if (arabic == 0) {  
+    outputField.innerHTML = 'Nulla'
+  } else if (arabic != 0) {
+   for (let i = 0; i < arabicArray.length; i++) {
+    while (arabicArray[i] <= arabic) {
+      roman += romanArray[i]
+      arabic -= arabicArray[i]
+    }
+ }
+   outputField.innerHTML = roman
+  }
+} else {
+   outputField.innerHTML = 'Please enter non negative integers only. No decimal points.'
+}
+ 
+ }     
+ 
+     
+     
+   
+</script>
+    
